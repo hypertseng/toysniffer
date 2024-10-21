@@ -1,13 +1,21 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "lldb",
-      "request": "launch",
-      "args": [],
-      "cwd": "/Users/zengzixuan/Desktop/toysniffer",
-      "program": "/Users/zengzixuan/Desktop/toysniffer/build/Debug/outDebug"
-    }
-  ]
+    "configurations": [
+        {
+            "name": "C/C++: clang++ build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "args": [
+                "pkexec"
+            ],
+            "program": "${fileDirname}/bin/${fileBasenameNoExtension}",
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "preLaunchTask": "C/C++: clang build active file",
+            "runInTerminal": true // 在终端中运行
+        }
+    ],
+    "version": "2.0.0"
 }

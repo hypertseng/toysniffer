@@ -1,0 +1,9 @@
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/gui.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/edit_cache.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/rebuild_cache.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/list_install_components.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/install.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/install/local.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/install/strip.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/gui_autogen_timestamp_deps.dir
+/Users/zengzixuan/Desktop/toysniffer/gui/build/CMakeFiles/gui_autogen.dir

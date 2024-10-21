@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/Users/zengzixuan/Desktop/toysniffer/gui/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/zengzixuan/Desktop/toysniffer/gui/build/gui_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtWidgets.framework/Headers -isystem /opt/homebrew/lib/QtGui.framework/Headers -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -o CMakeFiles/gui.dir/gui_autogen/mocs_compilation.cpp.o -c /Users/zengzixuan/Desktop/toysniffer/gui/build/gui_autogen/mocs_compilation.cpp",
+  "file": "/Users/zengzixuan/Desktop/toysniffer/gui/build/gui_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/gui.dir/gui_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/Users/zengzixuan/Desktop/toysniffer/gui/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/zengzixuan/Desktop/toysniffer/gui/build/gui_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtWidgets.framework/Headers -isystem /opt/homebrew/lib/QtGui.framework/Headers -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -o CMakeFiles/gui.dir/main.cpp.o -c /Users/zengzixuan/Desktop/toysniffer/gui/main.cpp",
+  "file": "/Users/zengzixuan/Desktop/toysniffer/gui/main.cpp",
+  "output": "CMakeFiles/gui.dir/main.cpp.o"
+},
+{
+  "directory": "/Users/zengzixuan/Desktop/toysniffer/gui/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/Users/zengzixuan/Desktop/toysniffer/gui/build/gui_autogen/include -isystem /opt/homebrew/lib/QtCore.framework/Headers -iframework /opt/homebrew/lib -isystem /opt/homebrew/share/qt/mkspecs/macx-clang -isystem /opt/homebrew/include -isystem /opt/homebrew/lib/QtWidgets.framework/Headers -isystem /opt/homebrew/lib/QtGui.framework/Headers -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -o CMakeFiles/gui.dir/mainwindow.cpp.o -c /Users/zengzixuan/Desktop/toysniffer/gui/mainwindow.cpp",
+  "file": "/Users/zengzixuan/Desktop/toysniffer/gui/mainwindow.cpp",
+  "output": "CMakeFiles/gui.dir/mainwindow.cpp.o"
+}
+]
