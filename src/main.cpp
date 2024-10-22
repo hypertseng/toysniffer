@@ -1,4 +1,4 @@
-#include "capture.h"
+#include "../include/capture.h"
 #include <iostream>
 #include <pcap.h>
 
