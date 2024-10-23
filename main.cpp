@@ -3,7 +3,7 @@
 #include <pcap.h>
 
 // 回调函数，用于处理捕获到的数据包
-void myPacketCaptured(const RawPacket &pkt)
+void captureCallback(const RawPacket &pkt)
 {
     std::cout << "捕获到一个数据包: " << std::endl;
     std::cout << "时间戳: " << pkt.header->ts.tv_sec << " 秒" << std::endl;
@@ -30,49 +30,9 @@ int main()
     bpf_u_int32 mask; // 子网掩码
 
     // 设置捕获数据包的回调函数
-    capture.callback = myPacketCaptured;
-
-    // 获取所有网络接口
-    if (pcap_findalldevs(&alldevs, errbuf) == -1)
-    {
-        std::cerr << "无法获取网络接口: " << errbuf << std::endl;
-        return 1;
-    }
-
-    // 2. 打印所有可用的网络接口
-    std::cout << "可用的网络接口:\n";
-    int i = 0;
-    for (dev = alldevs; dev != nullptr; dev = dev->next)
-    {
-        std::cout << ++i << ": " << dev->name;
-        if (dev->description)
-        {
-            std::cout << " (" << dev->description << ")";
-        }
-        std::cout << std::endl;
-    }
-
-    // 选择网络接口进行抓包
-    if (i == 0)
-    {
-        std::cerr << "没有可用的网络接口" << std::endl;
-        return 1;
-    }
+    capture.callback = captureCallback;
 
     target_device = "en0";
-
-    // 获取设备的网络地址和子网掩码
-    // if (pcap_lookupnet(alldevs->name, &net, &mask, errbuf) == -1)
-    if (pcap_lookupnet(target_device, &net, &mask, errbuf) == -1)
-    {
-        std::cerr << "无法获取设备 " << alldevs->name << " 的网络地址和子网掩码: " << errbuf << std::endl;
-        net = 0;
-        mask = 0;
-    }
-
-    // 打印网络地址和子网掩码
-    // std::cout << "设备 " << alldevs->name << " 的网络地址: " << net << std::endl;
-    // std::cout << "设备 " << alldevs->name << " 的子网掩码: " << mask << std::endl;
 
     std::string filter = "tcp";     // 设置一个简单的过滤器表达式，捕获 TCP 数据包
 

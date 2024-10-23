@@ -10,16 +10,21 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    $$PWD/../src/*.cpp
+
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    $$PWD/../include/*
 
 FORMS += \
     mainwindow.ui
 
 INCLUDEPATH += $$PWD/../include
 LIBS += -lpcap
+
+DESTDIR = $$PWD/../bin/
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

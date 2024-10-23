@@ -11,6 +11,7 @@
 // 定义原始数据包结构
 struct RawPacket
 {
+    struct timeval ts;
     std::unique_ptr<pcap_pkthdr> header;
     std::unique_ptr<u_char[]> data;
 };

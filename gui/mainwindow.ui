@@ -59,7 +59,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>开始抓包</string>
+            <string>开始</string>
            </property>
           </widget>
          </item>
@@ -72,7 +72,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>停止抓包</string>
+            <string>结束</string>
            </property>
           </widget>
          </item>
@@ -113,17 +113,14 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2">
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2">
         <item>
-         <widget class="QTreeView" name="protocolTreeView"/>
-        </item>
-        <item>
-         <widget class="QTableView" name="packetListView"/>
+         <widget class="QTableView" name="packetTableView"/>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="detailsTextEdit"/>
+       <widget class="QTreeView" name="protocolTreeView"/>
       </item>
       <item>
        <widget class="QTextEdit" name="logTextEdit"/>

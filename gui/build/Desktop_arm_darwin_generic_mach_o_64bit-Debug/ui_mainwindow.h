@@ -42,9 +42,8 @@ public:
     QComboBox *interfaceComboBox;
     QLineEdit *filterLineEdit;
     QHBoxLayout *horizontalLayout_2;
+    QTableView *packetTableView;
     QTreeView *protocolTreeView;
-    QTableView *packetListView;
-    QTextEdit *detailsTextEdit;
     QTextEdit *logTextEdit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -121,25 +120,19 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        protocolTreeView = new QTreeView(snifferWidget);
-        protocolTreeView->setObjectName("protocolTreeView");
+        packetTableView = new QTableView(snifferWidget);
+        packetTableView->setObjectName("packetTableView");
 
-        horizontalLayout_2->addWidget(protocolTreeView);
+        horizontalLayout_2->addWidget(packetTableView);
 
-        packetListView = new QTableView(snifferWidget);
-        packetListView->setObjectName("packetListView");
-
-        horizontalLayout_2->addWidget(packetListView);
-
-        horizontalLayout_2->setStretch(0, 1);
-        horizontalLayout_2->setStretch(1, 2);
+        horizontalLayout_2->setStretch(0, 2);
 
         verticalLayout->addLayout(horizontalLayout_2);
 
-        detailsTextEdit = new QTextEdit(snifferWidget);
-        detailsTextEdit->setObjectName("detailsTextEdit");
+        protocolTreeView = new QTreeView(snifferWidget);
+        protocolTreeView->setObjectName("protocolTreeView");
 
-        verticalLayout->addWidget(detailsTextEdit);
+        verticalLayout->addWidget(protocolTreeView);
 
         logTextEdit = new QTextEdit(snifferWidget);
         logTextEdit->setObjectName("logTextEdit");
@@ -168,8 +161,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        startCaptureButton->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213\346\212\223\345\214\205", nullptr));
-        stopCaptureButton->setText(QCoreApplication::translate("MainWindow", "\345\201\234\346\255\242\346\212\223\345\214\205", nullptr));
+        startCaptureButton->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213", nullptr));
+        stopCaptureButton->setText(QCoreApplication::translate("MainWindow", "\347\273\223\346\235\237", nullptr));
     } // retranslateUi
 
 };
