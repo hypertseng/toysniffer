@@ -10,7 +10,8 @@ QString get_time()
     return QDateTime::currentDateTime().toString("[yyyy-MM-dd HH:mm:ss]\t");
 }
 
-std::string convertTimevalToString(const timeval &tv) {
+std::string convertTimevalToString(const timeval &tv)
+{
     // 将秒数转换为本地时间
     struct tm *tm_info = localtime(&tv.tv_sec);
     char buffer[64];
@@ -46,6 +47,41 @@ void populateProtocolTreeView(QTreeView *treeView, const ProtocolNode &rootNode)
     treeView->setModel(model);
 }
 
+std::pair<QString, QString> MainWindow::formatRawData(const u_char *data, int length)
+{
+    std::stringstream hexStream, asciiStream;
+
+    for (int i = 0; i < length; i += 16)
+    {
+        hexStream << std::setw(4) << std::setfill('0') << std::hex << i << "  "; // 行偏移地址
+        for (int j = 0; j < 16; ++j)
+        {
+            if (i + j < length)
+                hexStream << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(data[i + j]) << " "; // 十六进制值
+            else
+                hexStream << "   "; // 空格填充
+        }
+        hexStream << " "; // 十六进制和 ASCII 之间的分隔
+
+        for (int j = 0; j < 16; ++j)
+        {
+            if (i + j < length)
+            {
+                char ch = static_cast<char>(data[i + j]);
+                asciiStream << (std::isprint(ch) ? ch : '.'); // 显示可打印字符，非可打印字符用 '.'
+            }
+            else
+            {
+                asciiStream << ' '; // 空格填充
+            }
+        }
+        hexStream << "\n";   // 换行
+        asciiStream << "\n"; // 换行
+    }
+
+    return {QString::fromStdString(hexStream.str()), QString::fromStdString(asciiStream.str())};
+}
+
 // libpcap 的回调函数
 void MainWindow::packetCallback(const RawPacket &pkt)
 {
@@ -55,15 +91,18 @@ void MainWindow::packetCallback(const RawPacket &pkt)
     // 从 RawPacket 中提取数据和长度
     const unsigned char *packetDataPtr = pkt.data.get(); // 获取数据包数据指针
     int length = pkt.header->len;                        // 获取数据包长度
-
     protocolNode.protocolName = "RawPacket";
     protocolNode.details = "Length: " + std::to_string(length) + " bytes";
 
     // 解析数据包
     protocolpaser->parsePacketLayers(packetInfo, packetDataPtr, length, protocolNode);
+    // 过滤掉不符合所选择协议的数据报，如来自tcp 80端口的非HTTP数据报
+    if (ui->filterLineEdit->text().toStdString() != "" && ui->filterLineEdit->text().toStdString() != packetInfo.protocol)
+        return;
     packetInfo.time = convertTimevalToString(pkt.ts);
     loadPacketData(packetInfo);
     allProtocolNode.push_back(protocolNode);
+    allDataNode.push_back({length, packetDataPtr});
 }
 
 void MainWindow::loadPacketData(const PacketInfo &packetInfo)
@@ -72,11 +111,12 @@ void MainWindow::loadPacketData(const PacketInfo &packetInfo)
     QList<QStandardItem *> rowData;
 
     // 创建新的 QStandardItem 对象并设置文本
-    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.time)));          // 时间
-    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.sourceIP)));      // 源地址
-    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.destinationIP))); // 目的地址
-    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.protocol)));      // 协议
-    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.info)));          // 信息
+    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.time)));                   // 时间
+    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.sourceIP)));               // 源地址
+    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.destinationIP)));          // 目的地址
+    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.protocol)));               // 协议
+    rowData.append(new QStandardItem(QString::fromStdString(std::to_string(packetInfo.length)))); // 报文长度
+    rowData.append(new QStandardItem(QString::fromStdString(packetInfo.info)));                   // 信息
 
     // 将新行添加到模型中
     packetInfoModel->appendRow(rowData);
@@ -125,7 +165,7 @@ MainWindow::MainWindow(QWidget *parent)
     QStringList headList; // 表头
     headList << QString::fromLocal8Bit("Time") << QString::fromLocal8Bit("Source")
              << QString::fromLocal8Bit("Destination") << QString::fromLocal8Bit("Protocol")
-             << QString::fromLocal8Bit("Info");
+             << QString::fromLocal8Bit("Length") << QString::fromLocal8Bit("Info");
     packetInfoModel->setHorizontalHeaderLabels(headList);
     ui->packetTableView->setModel(packetInfoModel);
     ui->packetTableView->horizontalHeader()->setVisible(true);
@@ -133,6 +173,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->packetTableView->horizontalHeader()->setStretchLastSection(true);
 
     capture->callback = std::bind(&MainWindow::packetCallback, this, std::placeholders::_1);
+
+    // ui->rawDataLabel->setAlignment(Qt::AlignTop | Qt::AlignLeft);  // 左上对齐
+    ui->rawDataHexLabel->setText("Capturing packets...");
 
     // 信号与槽的连接
     connect(ui->startCaptureButton, &QPushButton::clicked, this, &MainWindow::onStartCapture);
@@ -155,6 +198,7 @@ void MainWindow::onComboBoxChanged()
 {
     ui->logTextEdit->append(get_time() + "已选择网络端口" + ui->interfaceComboBox->currentText());
     allProtocolNode.clear();
+    ui->packetTableView->model()->removeRows(0, ui->packetTableView->model()->rowCount());
 }
 
 void MainWindow::onHandleFilterChange()
@@ -176,6 +220,7 @@ void MainWindow::onFilterChanged()
 {
     filterTimer->start();
     allProtocolNode.clear();
+    ui->packetTableView->model()->removeRows(0, ui->packetTableView->model()->rowCount());
 }
 
 // 开始抓包的槽函数
@@ -183,8 +228,33 @@ void MainWindow::onStartCapture()
 {
     // 处理开始抓包的逻辑
     ui->logTextEdit->append(get_time() + "开始嗅探...");
+    std::string filterExp;
+    std::string protocolType = ui->filterLineEdit->text().toStdString();
+    // 根据协议字符串生成过滤表达式
+    if (protocolType == "TCP" || protocolType == "tcp")
+        filterExp = "tcp";
+    else if (protocolType == "UDP" || protocolType == "udp")
+        filterExp = "udp";
+    else if (protocolType == "ICMP" || protocolType == "icmp")
+        filterExp = "icmp";
+    else if (protocolType == "HTTP" || protocolType == "http")
+        filterExp = "tcp port 80";
+    else if (protocolType == "HTTPS" || protocolType == "https")
+        filterExp = "tcp port 443";
+    else if (protocolType == "FTP" || protocolType == "ftp")
+        filterExp = "tcp port 21";
+    else if (protocolType == "DNS" || protocolType == "dns")
+        filterExp = "udp port 53";
+    else if (protocolType == "ARP" || protocolType == "arp")
+        filterExp = "arp";
+    else if (protocolType == "RIP" || protocolType == "rip")
+        filterExp = "udp port 520";
+    else if (protocolType == "IGMP" || protocolType == "igmp")
+        filterExp = "igmp";
+    else
+        filterExp = ""; // 不设置过滤器，捕获所有数据包
 
-    if (!capture->startCapture(ui->interfaceComboBox->currentText().toStdString(), ui->filterLineEdit->text().toStdString()))
+    if (!capture->startCapture(ui->interfaceComboBox->currentText().toStdString(), filterExp))
     {
 
         ui->logTextEdit->append(get_time() + "无法开始捕获数据包");
@@ -210,4 +280,8 @@ void MainWindow::onPacketSelected(const QModelIndex &index)
     int row = index.row();
     ProtocolNode node = allProtocolNode[row];
     populateProtocolTreeView(ui->protocolTreeView, node);
+
+    auto [hexText, asciiText] = formatRawData(allDataNode[row].data, allDataNode[row].length);
+    ui->rawDataHexLabel->setText(hexText); // 将格式化内容设置为QLabel文本
+    ui->rawDataAsciiLabel->setText(asciiText);
 }

@@ -27,7 +27,7 @@ private slots:
     void onComboBoxChanged();
     void onFilterChanged();
     void onHandleFilterChange();
-    void onPacketSelected(const QModelIndex &indexn);
+    void onPacketSelected(const QModelIndex &index);
 
 private:
     Ui::MainWindow *ui;
@@ -38,7 +38,8 @@ private:
     ProtocolParser *protocolpaser;
     PacketCapture *capture;
     std::vector<ProtocolNode> allProtocolNode;
-
+    std::vector<DataNode> allDataNode;
+    std::pair<QString, QString> formatRawData(const u_char *data, int length);
 
     // void setupTableView();  // 设置 QTableView 的函数
     // void updatePacketList(const ProtocolParser& protocolpaser);  // 更新数据表格函数

@@ -14,10 +14,12 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
@@ -37,13 +39,20 @@ public:
     QWidget *toolBarWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *startCaptureButton;
+    QSpacerItem *horizontalSpacer_2;
     QPushButton *stopCaptureButton;
     QSpacerItem *horizontalSpacer;
     QComboBox *interfaceComboBox;
+    QSpacerItem *horizontalSpacer_3;
     QLineEdit *filterLineEdit;
-    QHBoxLayout *horizontalLayout_2;
     QTableView *packetTableView;
     QTreeView *protocolTreeView;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *rawDataHexLabel;
+    QLabel *rawDataAsciiLabel;
     QTextEdit *logTextEdit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -52,7 +61,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(550, 537);
+        MainWindow->resize(680, 762);
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -86,6 +95,10 @@ public:
 
         horizontalLayout->addWidget(startCaptureButton);
 
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_2);
+
         stopCaptureButton = new QPushButton(toolBarWidget);
         stopCaptureButton->setObjectName("stopCaptureButton");
         sizePolicy.setHeightForWidth(stopCaptureButton->sizePolicy().hasHeightForWidth());
@@ -104,6 +117,10 @@ public:
 
         horizontalLayout->addWidget(interfaceComboBox);
 
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_3);
+
         filterLineEdit = new QLineEdit(toolBarWidget);
         filterLineEdit->setObjectName("filterLineEdit");
         sizePolicy.setHeightForWidth(filterLineEdit->sizePolicy().hasHeightForWidth());
@@ -111,41 +128,71 @@ public:
 
         horizontalLayout->addWidget(filterLineEdit);
 
-        horizontalLayout->setStretch(0, 4);
-        horizontalLayout->setStretch(1, 4);
-        horizontalLayout->setStretch(3, 3);
-        horizontalLayout->setStretch(4, 3);
+        horizontalLayout->setStretch(0, 10);
+        horizontalLayout->setStretch(1, 1);
+        horizontalLayout->setStretch(2, 10);
+        horizontalLayout->setStretch(3, 5);
+        horizontalLayout->setStretch(4, 10);
+        horizontalLayout->setStretch(5, 1);
+        horizontalLayout->setStretch(6, 12);
 
         verticalLayout->addWidget(toolBarWidget);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName("horizontalLayout_2");
         packetTableView = new QTableView(snifferWidget);
         packetTableView->setObjectName("packetTableView");
 
-        horizontalLayout_2->addWidget(packetTableView);
-
-        horizontalLayout_2->setStretch(0, 2);
-
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout->addWidget(packetTableView);
 
         protocolTreeView = new QTreeView(snifferWidget);
         protocolTreeView->setObjectName("protocolTreeView");
 
         verticalLayout->addWidget(protocolTreeView);
 
+        scrollArea = new QScrollArea(snifferWidget);
+        scrollArea->setObjectName("scrollArea");
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 652, 146));
+        widget = new QWidget(scrollAreaWidgetContents);
+        widget->setObjectName("widget");
+        widget->setGeometry(QRect(10, 10, 631, 111));
+        horizontalLayout_2 = new QHBoxLayout(widget);
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        rawDataHexLabel = new QLabel(widget);
+        rawDataHexLabel->setObjectName("rawDataHexLabel");
+
+        horizontalLayout_2->addWidget(rawDataHexLabel);
+
+        rawDataAsciiLabel = new QLabel(widget);
+        rawDataAsciiLabel->setObjectName("rawDataAsciiLabel");
+
+        horizontalLayout_2->addWidget(rawDataAsciiLabel);
+
+        horizontalLayout_2->setStretch(0, 3);
+        horizontalLayout_2->setStretch(1, 1);
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        verticalLayout->addWidget(scrollArea);
+
         logTextEdit = new QTextEdit(snifferWidget);
         logTextEdit->setObjectName("logTextEdit");
 
         verticalLayout->addWidget(logTextEdit);
 
+        verticalLayout->setStretch(0, 2);
+        verticalLayout->setStretch(1, 8);
+        verticalLayout->setStretch(2, 3);
+        verticalLayout->setStretch(3, 5);
+        verticalLayout->setStretch(4, 4);
 
         verticalLayout_2->addLayout(verticalLayout);
 
         MainWindow->setCentralWidget(snifferWidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 550, 36));
+        menubar->setGeometry(QRect(0, 0, 680, 36));
         sizePolicy.setHeightForWidth(menubar->sizePolicy().hasHeightForWidth());
         menubar->setSizePolicy(sizePolicy);
         MainWindow->setMenuBar(menubar);
@@ -163,6 +210,8 @@ public:
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         startCaptureButton->setText(QCoreApplication::translate("MainWindow", "\345\274\200\345\247\213", nullptr));
         stopCaptureButton->setText(QCoreApplication::translate("MainWindow", "\347\273\223\346\235\237", nullptr));
+        rawDataHexLabel->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        rawDataAsciiLabel->setText(QString());
     } // retranslateUi
 
 };

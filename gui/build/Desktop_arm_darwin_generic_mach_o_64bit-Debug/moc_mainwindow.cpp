@@ -44,7 +44,7 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "onHandleFilterChange",
     "onPacketSelected",
     "QModelIndex",
-    "indexn"
+    "index"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
