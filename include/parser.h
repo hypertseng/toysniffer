@@ -5,7 +5,6 @@
 #include <vector>
 #include <set>
 #include <cstdint>
-#include "capture.h"
 
 extern std::set<std::string> supportedProtocols;
 

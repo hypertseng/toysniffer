@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include "capture.h"
-#include "parser.h"
+#include "flowtracker.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,26 +26,27 @@ private slots:
     void onStopCapture();
     void onComboBoxChanged();
     void onFilterChanged();
-    void onHandleFilterChange();
     void onPacketSelected(const QModelIndex &index);
+    void updateWaveform();
+    void onProcessSelected(int index);
 
 private:
     Ui::MainWindow *ui;
     char errbuf[PCAP_ERRBUF_SIZE]; /* error string */
     pcap_if_t *alldevs;
-    QTimer *filterTimer;
+    QTimer *timer;
     QStandardItemModel *packetInfoModel; // 使用 QStandardItemModel 作为数据模型
     ProtocolParser *protocolpaser;
     PacketCapture *capture;
     std::vector<ProtocolNode> allProtocolNode;
     std::vector<DataNode> allDataNode;
     std::pair<QString, QString> formatRawData(const u_char *data, int length);
-
-    // void setupTableView();  // 设置 QTableView 的函数
-    // void updatePacketList(const ProtocolParser& protocolpaser);  // 更新数据表格函数
+    FlowTracker flowTracker;
+    QString selectedProcessID;
+    long totalLength;
     void loadPacketData(const PacketInfo &packetInfo); // 加载捕获的数据包并展示在表格中
-    // void updatePacketDetails(const std::vector<unsigned char>& packet); // 更新详情和二进制表示
     void packetCallback(const RawPacket &pkt);
+    void initializeProcessComboBox();
 };
 
 #endif // MAINWINDOW_H

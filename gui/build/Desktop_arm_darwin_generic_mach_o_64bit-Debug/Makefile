@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.0 -Wall -Wextra $(DEFINES)
-CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.0 -Wall -Wextra $(DEFINES)
-INCPATH       = -I../../../gui -I. -I../../../include -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/AGL.framework/Headers -I/opt/homebrew/share/qt/mkspecs/macx-clang -F/opt/homebrew/lib
+DEFINES       = -DQT_QML_DEBUG -DQT_CHARTS_LIB -DQT_OPENGLWIDGETS_LIB -DQT_WIDGETS_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.0 -Wall -Wextra $(DEFINES)
+CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.0 -Wall -Wextra $(DEFINES)
+INCPATH       = -I../../../gui -I. -I../../../include -I/opt/homebrew/lib/QtCharts.framework/Headers -I/opt/homebrew/lib/QtOpenGLWidgets.framework/Headers -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtOpenGL.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/AGL.framework/Headers -I/opt/homebrew/share/qt/mkspecs/macx-clang -F/opt/homebrew/lib
 QMAKE         = /opt/homebrew/opt/qt/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = gui1.0.0
 DISTDIR = /Users/zengzixuan/Desktop/toysniffer/gui/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/.tmp/gui1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.0 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/opt/homebrew/lib
-LIBS          = $(SUBLIBS) -F/opt/homebrew/lib -lpcap -framework QtWidgets -framework QtGui -framework AppKit -framework ImageIO -framework Metal -framework QtCore -framework IOKit -framework DiskArbitration -framework AGL -framework OpenGL   
+LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.0 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/opt/homebrew/lib
+LIBS          = $(SUBLIBS) -F/opt/homebrew/lib -lpcap -framework QtCharts -framework QtOpenGLWidgets -framework QtWidgets -framework QtOpenGL -framework QtGui -framework AppKit -framework ImageIO -framework Metal -framework QtCore -framework IOKit -framework DiskArbitration -framework AGL -framework OpenGL   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -55,10 +55,12 @@ OBJECTS_DIR   = ./
 SOURCES       = ../../main.cpp \
 		../../mainwindow.cpp \
 		../../../src/capture.cpp \
+		../../../src/flowtracker.cpp \
 		../../../src/paser.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		capture.o \
+		flowtracker.o \
 		paser.o \
 		moc_mainwindow.o
 DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
@@ -407,9 +409,11 @@ DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
 		/opt/homebrew/share/qt/mkspecs/features/lex.prf \
 		../../../../gui.pro ../../mainwindow.h \
 		../../../include/capture.h \
+		../../../include/flowtracker.h \
 		../../../include/parser.h ../../main.cpp \
 		../../mainwindow.cpp \
 		../../../src/capture.cpp \
+		../../../src/flowtracker.cpp \
 		../../../src/paser.cpp
 QMAKE_TARGET  = gui
 DESTDIR       = ../../../bin/
@@ -417,7 +421,7 @@ TARGET        = ../../../bin/gui.app/Contents/MacOS/gui
 
 ####### Custom Variables
 EXPORT_QMAKE_MAC_SDK = macosx
-EXPORT_QMAKE_MAC_SDK_VERSION = 15.0
+EXPORT_QMAKE_MAC_SDK_VERSION = 15.1
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
 EXPORT__QMAKE_STASH_ = /Users/zengzixuan/Desktop/toysniffer/gui/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/.qmake.stash
 EXPORT_VALID_ARCHS = arm64
@@ -780,7 +784,10 @@ Makefile: ../../gui.pro /opt/homebrew/share/qt/mkspecs/macx-clang/qmake.conf /op
 		/opt/homebrew/share/qt/mkspecs/features/yacc.prf \
 		/opt/homebrew/share/qt/mkspecs/features/lex.prf \
 		../../gui.pro \
+		/opt/homebrew/lib/QtCharts.framework/Resources/QtCharts.prl \
+		/opt/homebrew/lib/QtOpenGLWidgets.framework/Resources/QtOpenGLWidgets.prl \
 		/opt/homebrew/lib/QtWidgets.framework/Resources/QtWidgets.prl \
+		/opt/homebrew/lib/QtOpenGL.framework/Resources/QtOpenGL.prl \
 		/opt/homebrew/lib/QtGui.framework/Resources/QtGui.prl \
 		/opt/homebrew/lib/QtCore.framework/Resources/QtCore.prl
 	$(QMAKE) -o Makefile ../../gui.pro -spec macx-clang CONFIG+=debug CONFIG+=qml_debug
@@ -1129,7 +1136,10 @@ Makefile: ../../gui.pro /opt/homebrew/share/qt/mkspecs/macx-clang/qmake.conf /op
 /opt/homebrew/share/qt/mkspecs/features/yacc.prf:
 /opt/homebrew/share/qt/mkspecs/features/lex.prf:
 ../../gui.pro:
+/opt/homebrew/lib/QtCharts.framework/Resources/QtCharts.prl:
+/opt/homebrew/lib/QtOpenGLWidgets.framework/Resources/QtOpenGLWidgets.prl:
 /opt/homebrew/lib/QtWidgets.framework/Resources/QtWidgets.prl:
+/opt/homebrew/lib/QtOpenGL.framework/Resources/QtOpenGL.prl:
 /opt/homebrew/lib/QtGui.framework/Resources/QtGui.prl:
 /opt/homebrew/lib/QtCore.framework/Resources/QtCore.prl:
 qmake: FORCE
@@ -1157,8 +1167,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../mainwindow.h ../../../include/capture.h ../../../include/parser.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../main.cpp ../../mainwindow.cpp ../../../src/capture.cpp ../../../src/paser.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../mainwindow.h ../../../include/capture.h ../../../include/flowtracker.h ../../../include/parser.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../main.cpp ../../mainwindow.cpp ../../../src/capture.cpp ../../../src/flowtracker.cpp ../../../src/paser.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../mainwindow.ui $(DISTDIR)/
 
 
@@ -1192,7 +1202,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -mmacosx-version-min=14.0 -Wall -Wextra -dM -E -o moc_predefs.h /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -mmacosx-version-min=14.0 -Wall -Wextra -dM -E -o moc_predefs.h /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_mainwindow.cpp
 compiler_moc_header_clean:
@@ -1203,10 +1213,11 @@ moc_mainwindow.cpp: ../../mainwindow.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QStandardItemModel \
 		/opt/homebrew/lib/QtGui.framework/Headers/qstandarditemmodel.h \
 		../../../include/capture.h \
+		../../../include/flowtracker.h \
 		../../../include/parser.h \
 		moc_predefs.h \
 		/opt/homebrew/share/qt/libexec/moc
-	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/zengzixuan/Desktop/toysniffer/gui/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/zengzixuan/Desktop/toysniffer/gui -I/Users/zengzixuan/Desktop/toysniffer/include -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../mainwindow.h -o moc_mainwindow.cpp
+	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/zengzixuan/Desktop/toysniffer/gui/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/zengzixuan/Desktop/toysniffer/gui -I/Users/zengzixuan/Desktop/toysniffer/include -I/opt/homebrew/lib/QtCharts.framework/Headers -I/opt/homebrew/lib/QtOpenGLWidgets.framework/Headers -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtOpenGL.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1216,7 +1227,8 @@ compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../../mainwindow.ui \
-		/opt/homebrew/share/qt/libexec/uic
+		/opt/homebrew/share/qt/libexec/uic \
+		/opt/homebrew/lib/QtCharts.framework/Headers/qchartview.h
 	/opt/homebrew/share/qt/libexec/uic ../../mainwindow.ui -o ui_mainwindow.h
 
 compiler_rez_source_make_all:
@@ -1237,6 +1249,7 @@ main.o: ../../main.cpp ../../mainwindow.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QStandardItemModel \
 		/opt/homebrew/lib/QtGui.framework/Headers/qstandarditemmodel.h \
 		../../../include/capture.h \
+		../../../include/flowtracker.h \
 		../../../include/parser.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QApplication \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qapplication.h
@@ -1248,16 +1261,33 @@ mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QStandardItemModel \
 		/opt/homebrew/lib/QtGui.framework/Headers/qstandarditemmodel.h \
 		../../../include/capture.h \
+		../../../include/flowtracker.h \
 		../../../include/parser.h \
 		ui_mainwindow.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QDateTime \
 		/opt/homebrew/lib/QtCore.framework/Headers/qdatetime.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QTimer \
-		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h
+		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QDir \
+		/opt/homebrew/lib/QtCore.framework/Headers/qdir.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QProcess \
+		/opt/homebrew/lib/QtCore.framework/Headers/qprocess.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QRegularExpression \
+		/opt/homebrew/lib/QtCore.framework/Headers/qregularexpression.h \
+		/opt/homebrew/lib/QtCharts.framework/Headers/QChartView \
+		/opt/homebrew/lib/QtCharts.framework/Headers/qchartview.h \
+		/opt/homebrew/lib/QtCharts.framework/Headers/QValueAxis \
+		/opt/homebrew/lib/QtCharts.framework/Headers/qvalueaxis.h \
+		/opt/homebrew/lib/QtCharts.framework/Headers/QLineSeries \
+		/opt/homebrew/lib/QtCharts.framework/Headers/qlineseries.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
 
 capture.o: ../../../src/capture.cpp ../../../include/capture.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capture.o ../../../src/capture.cpp
+
+flowtracker.o: ../../../src/flowtracker.cpp ../../../include/flowtracker.h \
+		../../../include/parser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o flowtracker.o ../../../src/flowtracker.cpp
 
 paser.o: ../../../src/paser.cpp ../../../include/parser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o paser.o ../../../src/paser.cpp
